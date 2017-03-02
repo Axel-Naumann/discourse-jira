@@ -3,4 +3,4 @@
 # version: 0.0.1
 # authors: Axel Naumann axel@cern.ch
 
-#register_asset "javascripts/jira-plugin-replace.js", :server_side
+enabled_site_setting :jira_enabled

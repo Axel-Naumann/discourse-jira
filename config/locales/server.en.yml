@@ -1,0 +1,5 @@
+en:
+  site_settings:
+    jira_enabled: "Enable the Jira plugin"
+    jira_project_names: "Names of Jira projects to handle"
+    jira_base_url: "Jira server URL (excluding /browse/PROJ-1234)"

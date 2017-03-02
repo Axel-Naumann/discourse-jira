@@ -1,0 +1,12 @@
+plugins:
+  jira_enabled:
+    default: true
+    client: true
+  jira_project_names:
+    default: ''
+    refresh: true
+    type: list
+    client: true
+  jira_base_url:
+    default: ''
+    client: true
