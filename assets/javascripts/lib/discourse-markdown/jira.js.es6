@@ -1,12 +1,27 @@
 import { registerOption } from 'pretty-text/pretty-text';
 
+var jiraPluginDebug = false;
+function logIfDebug() {
+  if (jiraPluginDebug) {
+    arguments[0] = 'jira plugin: ' + arguments[0];
+    console.log(arguments)
+  }
+}
+
+
+function str_insert(str, pos, ins) {
+  logIfDebug("inserting TAG %s|||%s|||%s", str.slice(0,pos), ins, str.slice(pos));
+  return str.slice(0, pos) + ins + str.slice(pos);
+}
+
+
 function extractProjectToURLStem(exampleUrl) {
   // For https://sft.its.cern.ch/jira/browse/ROOT-8398 extract
   // "ROOT" and "https://sft.its.cern.ch/jira"
   var urlRegexp = new RegExp(String.raw`(https:\/\/.*)\/browse\/(([A-Z]+)-\d+)`);
   var matches;
   if (matches = exampleUrl.match(urlRegexp)) {
-    console.log("AXEL: jira url extraction %o", matches);
+    logIfDebug("url extraction %o", matches);
     if (matches.length == 4)
       return [matches[1], matches[3]];
   }
@@ -30,11 +45,6 @@ registerOption((siteSettings, opts) => {
 });
 
 
-function str_insert(str, pos, ins) {
-  console.log("AXEL: inserting TAG %s|||%s|||%s", str.slice(0,pos), ins, str.slice(pos));
-  return str.slice(0, pos) + ins + str.slice(pos);
-}
-
 function linkJiraUrl(text, jira_projects) {
   if (!jira_projects)
     return text;
@@ -48,7 +58,7 @@ function linkJiraUrl(text, jira_projects) {
   // $3 Check for "]" or "/" - we *don't* want those matches as they are entered as a link.
   var tagRegexp = new RegExp(String.raw`([\/\[])?(` + projectNamesOred + String.raw`)-\d+([\/\]])?`);
   while (matches = text.slice(posStart).match(tagRegexp)) {
-    console.log("AXEL: tag matches = %o", matches);
+    logIfDebug("tag matches = %o", matches);
     if (matches.length == 4 &&
         !matches[1] && matches[2] && !matches[3]) {
         // Transform FOO-42
@@ -76,13 +86,9 @@ function linkJiraUrl(text, jira_projects) {
   var urlRegexp = new RegExp(String.raw`(\]\()?((` + jiraUrlsOred + String.raw`)\/browse\/((`
                              + projectNamesOred + String.raw`)-\d+)\b([)\/])?)`);
   while (matches = text.slice(posStart).match(urlRegexp)) {
-    console.log("AXEL: matches = %o", matches);
+    logIfDebug("matches = %o", matches);
     if (matches.length == 7 &&
         !matches[1] && matches[2] && matches[3] && matches[4] && matches[5] && !matches[6]) {
-        function str_insert(str, pos, ins) {
-            console.log("AXEL: inserting %s|||%s|||%s", str.slice(0,pos), ins, str.slice(pos));
-            return str.slice(0, pos) + ins + str.slice(pos);
-        }
         // Transform https://host.com/browse/FOO-42
         // into [FOO-42](https://host.com/browse/FOO-42)
         text = str_insert(text, posStart + matches.index + matches[2].length, ')');
@@ -96,6 +102,7 @@ function linkJiraUrl(text, jira_projects) {
   }
   return text;
 }
+
 
 export function setup(helper) {
   helper.addPreProcessor(text => {
