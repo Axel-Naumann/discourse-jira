@@ -1,4 +1,4 @@
 en:
   site_settings:
     jira_enabled: "Enable the Jira plugin"
-    jira_project_urls: "Example issue URLs for Jira projects to be handled"
+    jira_project_urls: "Example issue URLs for Jira projects, e.g. https://myjira.tld/jira/browse/ABC-001"
