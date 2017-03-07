@@ -1,3 +1,6 @@
+# (c) Axel Naumann, 2017-03-07, axel@cern.ch
+# See file LICENSE in the top-most directory for the license.
+
 plugins:
   jira_enabled:
     default: true
