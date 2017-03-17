@@ -42,7 +42,7 @@ registerOption((siteSettings, opts) => {
     if (match) {
       opts.jira_projects[match[1]] = match[0];
     } else {
-      console.log("Jira plugin: invalid URL %s", urlsArr[iurl]);
+      logIfDebug("invalid URL %s", urlsArr[iurl]);
     }
   }
 });
