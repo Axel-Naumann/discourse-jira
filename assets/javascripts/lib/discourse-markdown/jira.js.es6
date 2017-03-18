@@ -2,19 +2,10 @@
 // See file LICENSE in the top-most directory for the license.
 
 import { registerOption } from 'pretty-text/pretty-text';
-import Ember from 'ember';
-
-var jiraPluginDebug = true;
-function logIfDebug() {
-  if (jiraPluginDebug) {
-    arguments[0] = 'jira plugin: ' + arguments[0];
-    Ember.Logger.debug(arguments)
-  }
-}
+//import Ember from 'ember';
 
 
 function str_insert(str, pos, ins) {
-  logIfDebug("inserting TAG %s|||%s|||%s", str.slice(0,pos), ins, str.slice(pos));
   return str.slice(0, pos) + ins + str.slice(pos);
 }
 
@@ -25,7 +16,6 @@ function extractProjectToURLStem(exampleUrl) {
   var urlRegexp = new RegExp(String.raw`(https:\/\/.*)\/browse\/(([A-Z]+)-\d+)`);
   var matches;
   if (matches = exampleUrl.match(urlRegexp)) {
-    logIfDebug("url extraction %o", matches);
     if (matches.length == 4)
       return [matches[1], matches[3]];
   }
@@ -62,7 +52,6 @@ function linkJiraUrl(text, jira_projects) {
   // $3 Check for "]" or "/" - we *don't* want those matches as they are entered as a link.
   var tagRegexp = new RegExp(String.raw`([\/\[])?(` + projectNamesOred + String.raw`)-\d+([\/\]])?`);
   while (matches = text.slice(posStart).match(tagRegexp)) {
-    logIfDebug("tag matches = %o", matches);
     if (matches.length == 4 &&
         !matches[1] && matches[2] && !matches[3]) {
         // Transform FOO-42
@@ -90,7 +79,6 @@ function linkJiraUrl(text, jira_projects) {
   var urlRegexp = new RegExp(String.raw`(\]\()?((` + jiraUrlsOred + String.raw`)\/browse\/((`
                              + projectNamesOred + String.raw`)-\d+)\b([)\/])?)`);
   while (matches = text.slice(posStart).match(urlRegexp)) {
-    logIfDebug("matches = %o", matches);
     if (matches.length == 7 &&
         !matches[1] && matches[2] && matches[3] && matches[4] && matches[5] && !matches[6]) {
         // Transform https://host.com/browse/FOO-42
