@@ -4,7 +4,7 @@
 import { registerOption } from 'pretty-text/pretty-text';
 import Ember from 'ember';
 
-var jiraPluginDebug = false;
+var jiraPluginDebug = true;
 function logIfDebug() {
   if (jiraPluginDebug) {
     arguments[0] = 'jira plugin: ' + arguments[0];
