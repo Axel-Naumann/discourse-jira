@@ -75,7 +75,9 @@ function linkJiraUrl(text, jira_projects) {
   // $4 The issue number, a series of CAPS followed by a dash followed by digits.
   // $5 The project name.
   // $6 Any trailing "/" will make us ignore the match.
-  var jiraUrlsOred = Object.values(jira_projects).join('|');
+  var jiraUrlsOred = Object.keys(jira_projects).map(function(key) {
+    return jira_projects[key];
+  }).join('|');
   var urlRegexp = new RegExp(String.raw`(\]\()?((` + jiraUrlsOred + String.raw`)\/browse\/((`
                              + projectNamesOred + String.raw`)-\d+)\b([)\/])?)`);
   while (matches = text.slice(posStart).match(urlRegexp)) {
