@@ -2,8 +2,6 @@
 // See file LICENSE in the top-most directory for the license.
 
 import { registerOption } from 'pretty-text/pretty-text';
-//import Ember from 'ember';
-
 
 function str_insert(str, pos, ins) {
   return str.slice(0, pos) + ins + str.slice(pos);
@@ -33,7 +31,7 @@ registerOption((siteSettings, opts) => {
     if (match) {
       opts.jira_projects[match[1]] = match[0];
     } else {
-      Ember.Logger.error("jira plugin: invalid URL %s", urlsArr[iurl]);
+      //Ember.Logger.error("jira plugin: invalid URL %s", urlsArr[iurl]);
     }
   }
 });
