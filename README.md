@@ -1,4 +1,10 @@
-# Jira plugin for Discourse
+# ARCHIVED: Jira plugin for Discourse
+
+This repo is not maintained anymore, the plugin likely doesn't work anymore.
+If you want to pick up its development please let me know so I can update
+this README and point to your repo!
+
+The rest of this file is history:
 
 ## What it does
 
